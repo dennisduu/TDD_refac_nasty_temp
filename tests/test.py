@@ -159,4 +159,16 @@ nasty_outputs = [
     18.84955592      0.01141597     -0.13921729
 """, 
 ]
-
+@pytest.mark.parametrize("expected_output", nasty_outputs)
+def test_lessnasty_output(expected_output):
+    captured_output = io.StringIO()
+    sys.stdout = captured_output
+    lessnasty.main()
+    sys.stdout = sys.__stdout__
+    actual_output = captured_output.getvalue().strip()
+    expected_output = expected_output.strip()
+    actual_output_lines = actual_output.split('\n')
+    expected_output_lines = expected_output.split('\n')
+    
+    for actual_line, expected_line in zip(actual_output_lines, expected_output_lines):
+        assert actual_line == expected_line, f"expect output: {expected_line}, but actual output was: {actual_line}"
