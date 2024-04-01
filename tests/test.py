@@ -2,8 +2,6 @@ import io
 import sys
 from src import lessnasty
 import pytest
-def test_import():
-    pass
 #import the original nasty output for comparison
 nasty_outputs = [
     """     0.00000000      0.00000000      0.00000000
@@ -169,6 +167,6 @@ def test_lessnasty_output(expected_output):
     expected_output = expected_output.strip()
     actual_output_lines = actual_output.split('\n')
     expected_output_lines = expected_output.split('\n')
-    
     for actual_line, expected_line in zip(actual_output_lines, expected_output_lines):
-        assert actual_line == expected_line, f"expect output: {expected_line}, but actual output was: {actual_line}"
+        assert actual_line == expected_line, "expect output: {}, but actual output was: {}".format(expected_line, actual_line)
+''
