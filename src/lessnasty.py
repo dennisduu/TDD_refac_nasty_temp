@@ -1,96 +1,32 @@
-'''nasty.py
-'''
+from math import cos
 
-from math import cos  
+TWO_PI = 18.84955592153876  #1 oscillation period
+COS_MOD = 0.5
+DRAG_COEF = 0.5
 
-t = 0.0
-x = 0.0
-dx = 0.0
-print("%15.8f %15.8f %15.8f" % (t, x, dx))
-dt = 18.84955592153876 / 10
-for i in range(10):
-    xold = x
-    dxold = dx
+num_steps = int
+freq_mod = float
 
-    x += dt * dxold
-    dx += dt * (cos(0.5*t) - xold - 0.5*dxold)
-    t += dt
-    print("{0:>15.8f} {1:>15.8f} {2:>15.8f}".format(t, x, dx))
-print()
+def simulate_motion(num_steps, freq_modifier):
+    t, x, dx = 0.0, 0.0, 0.0
+    dt = TWO_PI / num_steps
+    
+    #getting assistance from my friends for equation
+    print(f"{t:15.8f} {x:15.8f} {dx:15.8f}")
+    for i in range(num_steps):
+        xold, dxold = x, dx
+        x += dt * dxold
+        dx += dt * (cos(freq_modifier * t) - xold - DRAG_COEF * dxold)
+        t += dt
+        print(f"{t:15.8f} {x:15.8f} {dx:15.8f}")
+    print()
 
-t = 0.0
-x = 0.0
-dx = 0.0
-print("%15.8f %15.8f %15.8f" % (t, x, dx))
-dt = 18.84955592153876 / 20
-for i in range(20):
-    xold = x
-    dxold = dx
+def main():
+    #simulate different step and frequency modifiers
+    for steps in [10, 20, 40]:
+        simulate_motion(steps, COS_MOD)
+    for steps in [10, 20, 40]:
+        simulate_motion(steps, 2.0)
 
-    x += dt * dxold
-    dx += dt * (cos(0.5*t) - xold - 0.5*dxold)
-    t += dt
-    print("{:15.8f} {:15.8f} {:15.8f}".format(t, x, dx))
-print()
-
-t = 0.0
-x = 0.0
-dx = 0.0
-print("%15.8f %15.8f %15.8f" % (t, x, dx))
-dt = 18.84955592153876 / 40
-for i in range(40):
-    xold = x
-    dxold = dx
-
-    x += dt * dxold
-    dx += dt * (cos(0.5*t) - xold - 0.5*dxold)
-    t += dt
-    print("{:15.8f} {:15.8f} {:15.8f}".format(t, x, dx))
-print()
-
-
-t = 0.0
-x = 0.0
-dx = 0.0
-print("%15.8f %15.8f %15.8f" % (t, x, dx))
-dt = 18.84955592153876 / 10
-for i in range(10):
-    xold = x
-    dxold = dx
-
-    x += dt * dxold
-    dx += dt * (cos(2.0*t) - xold - 0.5*dxold)
-    t += dt
-    print("{0:>15.8f} {1:>15.8f} {2:>15.8f}".format(t, x, dx))
-print()
-
-t = 0.0
-x = 0.0
-dx = 0.0
-print("%15.8f %15.8f %15.8f" % (t, x, dx))
-dt = 18.84955592153876 / 20
-for i in range(20):
-    xold = x
-    dxold = dx
-
-    x += dt * dxold
-    dx += dt * (cos(2.0*t) - xold - 0.5*dxold)
-    t += dt
-    print("{:15.8f} {:15.8f} {:15.8f}".format(t, x, dx))
-print()
-
-t = 0.0
-x = 0.0
-dx = 0.0
-print("%15.8f %15.8f %15.8f" % (t, x, dx))
-dt = 18.84955592153876 / 40
-for i in range(40):
-    xold = x
-    dxold = dx
-
-    x += dt * dxold
-    dx += dt * (cos(2.0*t) - xold - 0.5*dxold)
-    t += dt
-    print("{:15.8f} {:15.8f} {:15.8f}".format(t, x, dx))
-print()
-
+if __name__ == "__main__":
+    main()
